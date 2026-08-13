@@ -63,7 +63,7 @@ return true;
 
 }
 int main(){
-    string s = "anagram", t = "nanaram";
+    string s = "anagram", t = "nagaram";
     if(solve(s,t)){
         cout<<"true";
     }
