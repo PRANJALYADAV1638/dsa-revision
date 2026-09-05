@@ -1,23 +1,14 @@
-#include <bits/stdc++.h>
+#include<iostream>
 using namespace std;
-
-class Solution {
-public:
-    bool checkIthBit(int n, int i) {
-        return (n & (1 << i)) != 0;  
+int main(){
+    int n ;
+    cin>>n;
+    int i;
+    cin>>i;
+    if(n&(1<<i)){
+        cout<<"true";
     }
-};
-
-int main() {
-    Solution sol;
-    int num = 5; 
-    int bitIndex = 2;  
-
-    if (sol.checkIthBit(num, bitIndex)) {
-        cout << "The " << bitIndex << "-th bit of " << num << " is set (1)." << endl;
-    } else {
-        cout << "The " << bitIndex << "-th bit of " << num << " is not set (0)." << endl;
+    else{
+        cout<<"false";
     }
-
-    return 0;
 }
