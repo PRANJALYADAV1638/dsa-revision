@@ -76,5 +76,4 @@ int main() {
     cout << "Top: " << st.top() << endl;
     cout << "Minimum: " << st.getMin() << endl;
 
-    return 0;
 }
