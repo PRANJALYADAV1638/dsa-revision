@@ -75,6 +75,6 @@ int main() {
 
     cout << "Postfix expression: "
          << infixToPostfix(infix) << endl;
-
+return 0;
     
 }
