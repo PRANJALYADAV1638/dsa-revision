@@ -51,5 +51,3 @@ int main() {
     else {
         cout << "Invalid";
     }
-return 0;
-}
