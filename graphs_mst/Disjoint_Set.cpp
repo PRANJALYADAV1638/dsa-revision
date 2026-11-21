@@ -1,99 +1,85 @@
-
-/*
-smaller attach because agr bda chota k attach hoga to tree ek side jyada bda ho jaiga*/
-#include <bits/stdc++.h>
+#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
+vector<int> parent;
+vector<int> rnk;
+vector<int> size;
+int findparent(int x){
+    if(parent[x]==x)return x;
+return parent[x]=findparent(parent[x]);
+}
 
-class DisjointSet {
+void ubr(int x, int y){
+int parent_x=findparent(x);
+int parent_y=findparent(y);
+if(parent_x==parent_y)return ;
+if(rnk[parent_x]==rnk[parent_y]){
+    parent[parent_y]=parent_x;
+    rnk[parent_x]++;
+}
+else if(rnk[parent_x]<rnk[parent_y]){
+parent[parent_x]=parent_y;
+}
+else{
+ parent[parent_y]=parent_x;   
+}
 
-    vector<int> parent;
-    vector<int> rank;
-    vector<int> size;
 
-public:
+}
+void ubs(int x, int y){
+int parent_x=findparent(x);
+int parent_y=findparent(y);
+if(parent_x==parent_y)return;
+if(size[parent_x]>size[parent_y]){
+    parent[parent_y]=parent_x;
+size[parent_x]+=size[parent_y];
+}
+else{
+    parent[parent_x]=parent_y;
+    size[parent_y]+=size[parent_x];
+}
+}
 
-    DisjointSet(int n) {
 
-        parent.resize(n);
-        rank.resize(n, 0);
-        size.resize(n, 1);
+int main(){
+vector<string> input={"dis","ubr","ubs","ubr","find","find"};
+vector<vector<int>> arr={{5},{0,1},{3,4},{1,2},{0,2},{1,3}};
+int n =arr[0][0];
+parent.resize(n);
+rnk.resize(n,0);
+size.resize(n,1);
+for(int b=0;b<n;b++){
+    parent[b]=b;
+}
 
-        for (int i = 0; i < n; i++) {
-            parent[i] = i;
+
+
+
+for(int b=0;b<input.size();b++){
+    if(input[b]=="dis"){
+        cout<<"NULL ";
+    }
+    if(input[b]=="ubr"){
+        int x=arr[b][0];
+        int y=arr[b][1];
+        ubr(x,y);
+        cout<<"NULL ";
+    }
+    if(input[b]=="ubs"){
+        int x=arr[b][0];
+        int y=arr[b][1];
+        ubs(x,y);
+        cout<<"NULL ";
+    }
+    if(input[b]=="find"){
+        int x=arr[b][0];
+        int y =arr[b][1];
+        if(findparent(x)==findparent(y)){
+            cout<<"true ";
+        }
+        else{
+            cout<<"false ";
         }
     }
-
-    int findparent(int u) {
-
-        if (parent[u] == u) {
-            return u;
-        }
-
-        return parent[u] = findparent(parent[u]);
-    }
-
-    void unionByRank(int u, int v) {
-
-        int p_u = findparent(u);
-        int p_v = findparent(v);
-
-        if (p_u == p_v) return;
-
-        if (rank[p_u] < rank[p_v]) {
-            parent[p_u] = p_v;
-        }
-
-        else if (rank[p_u] > rank[p_v]) {
-            parent[p_v] = p_u;
-        }
-
-        else {
-            parent[p_v] = p_u;
-            rank[p_u]++;
-        }
-    }
-
-    void unionBySize(int u, int v) {
-
-        int p_u = findparent(u);
-        int p_v = findparent(v);
-
-        if (p_u == p_v) return;
-
-        if (size[p_u] < size[p_v]) {
-
-            parent[p_u] = p_v;
-            size[p_v] += size[p_u];
-
-        }
-
-        else {
-
-            parent[p_v] = p_u;
-            size[p_u] += size[p_v];
-
-        }
-    }
-
-    bool find(int u, int v) {
-
-        return findparent(u) == findparent(v);
-    }
-};
-
-int main() {
-
-    DisjointSet ds(5);
-
-    ds.unionByRank(0, 1);
-
-    ds.unionBySize(2, 3);
-
-    cout << boolalpha;
-
-    cout << ds.find(0, 1) << endl;
-
-    cout << ds.find(0, 3) << endl;
-
-    return 0;
+}
 }
